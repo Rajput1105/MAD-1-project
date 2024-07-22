@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>Influencer Dashboard</title>
+    <h1>Welcome, Buddy!</h1>
+   
+    <button style="cursor:pointer;border: 0.05cm solid; color:rgb(67, 103, 234);" type="button" onclick="document.location='sponsor_find.html'">Find ?</button>
+    <button 
+    style="cursor:pointer;border: 0.05cm solid; color:rgb(77, 231, 16);" type="button" onclick="document.location='stats.html'">Stats</button>
+    <button style="cursor:pointer; border: 0.05cm solid; color:rgb(195, 15, 15);" type="button" onclick="document.location='login.html'">Logout</button>
+
+</head>
+<body>
+    <h1>Profile </h1>
+    <ul><img src="profile.jpg" alt="image">
+        <h4> Name : {{influencer.influencer_name}}</h4>
+        <h4> Target Audience : {{influencer.target_audience}}</h4>
+
+
+
+    <h2>Campaigns </h2>
+   
+        <!-- printing active campaigns -->
+        {% for campaign in campaigns %}
+        <li>{{ campaign.name }} - {{ campaign.status }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

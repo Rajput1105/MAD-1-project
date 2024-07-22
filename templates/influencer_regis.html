@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <button type="button" onclick="document.location='admin'">Admin login</button>
+    <button type="button" onclick="document.location='sponsor_regis'">Sponsor login</button>
+    <h1>Influencer login</h1>
+    <form action="/add-influencer/" method="post">
+        <div id="influencer_pannel" style="text-align: center; border: 1px solid; padding: 1%;">
+            <label for="influencer_name">Influencer Name:</label><input type="text" name="influencer_name" id="influencer_name" required>
+            <div>
+                <label for="target_audience">Target Audience:</label><input type="number" name="target_audience" id="target_audience" required>
+            </div>
+            <div>
+                <label for="youtube">YouTube:</label><input type="checkbox" name="youtube" id="youtube">
+            </div>
+            <div>
+                <label for="instagram">Instagram:</label><input type="checkbox" name="instagram" id="instagram">
+            </div>
+            <div>
+                <label for="twitter">Twitter:</label><input type="checkbox" name="twitter" id="twitter">
+            </div>
+            <div>
+                <label for="username">User Name:</label><input type="text" name="username" id="username" required>
+            </div>
+            <div>
+                <label for="password">Password:</label><input type="password" name="password" id="password" required>
+            </div>
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+    <title>Influencer login</title>
+</head>
+<body>
+</body>
+</html>

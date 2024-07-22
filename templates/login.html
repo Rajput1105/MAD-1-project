@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        
+        .container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+        .login-form {
+            border: 1px solid darkslateblue;
+            padding: 20px;
+            border-radius: 5px;
+            width: 300px;
+        }
+        .login-form h2 {
+            text-align: center;
+            color: blue;}
+        
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .login-form input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            
+            cursor: pointer;
+        }
+        
+    </style>
+</head>
+<body>
+    <div> 
+        
+
+        <button type="button" onclick="document.location='sponsor_regis' " > Sponser registration</button>
+        <button type="button" onclick="document.location='influencer_regis'">Influencer registration</button>
+        <button type="button" onclick="document.location='admin'">Admin login</button>       
+    </div>
+    <div class="container">
+        <!-- Sponsor Login Form -->
+        <div class="login-form">
+            <h2>Sponsor Login</h2>
+            <form action="/validate-sponsor/" method="post">
+                <label for="sponsor_username">Username:</label>
+                <input type="text" id="sponsor_username" name="username" required>
+                <label for="sponsor_password">Password:</label>
+                <input type="password" id="sponsor_password" name="password" required>
+                <input type="submit" value="Login">
+            </form>
+        </div>
+
+        <!-- Influencer Login Form -->
+        <div class="login-form">
+            <h2>Influencer Login</h2>
+            <form action="/validate-influencer/" method="post">
+                <label for="influencer_username">Username:</label>
+                <input type="text" id="influencer_username" name="username" required>
+                <label for="influencer_password">Password:</label>
+                <input type="password" id="influencer_password" name="password" required>
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

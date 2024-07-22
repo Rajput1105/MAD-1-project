@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <button style="cursor:pointer; color: red;" type="button" onclick="document.location='flag.html'">Flag/Progress</button>
+
+    <button style="cursor:pointer; color: red;" type="button" onclick="document.location='login.html'">Logout</button>
+
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <H3>Hello Admin !!!</H3>
+
+    <h2>Sponsors Details</h2>
+    <table>
+        <tr><th>ID</th>
+            <th>Name</th>
+            <th>BUDGET</th>
+            <th>INDUSTARY</th>
+            <th>USERNAME</th>
+            
+        </tr>
+        {% for sp in sponsor %}
+        <tr>
+            <td>{{ sp.id }}</td>
+            <td>{{ sp.company_name }}</td>
+            <td>{{ sp[2] }}</td>
+            <td>{{ sp[3] }}</td>
+            <td>{{ sp[4] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h2>Influencers Details</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Influencer_Name</th>
+            <th>USERNAME</th>
+            <th>Target Audience</th>
+            <th>Platform YouTube</th>
+            <th>Platform Instagram</th>
+            <th>Platform Twitter-X</th>
+            
+
+        </tr>
+        {% for x in influencer %}
+        <tr>
+            <td>{{ x[0] }}</td>
+            <td>{{ x[1] }}</td>
+            <td>{{ x[6] }}</td>
+            <td>{{ x[2] }}</td>
+            <td>{{ x[3] }}</td>
+            <td>{{ x[4] }}</td>
+            <td>{{ x[5] }}</td>
+
+
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

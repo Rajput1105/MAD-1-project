@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div>
+        <button style="cursor:pointer; color: green;" type="button" onclick="document.location='login'">Sponsor login</button>
+        <button style="cursor:pointer;  color: green;" type="button" onclick="document.location='login'">Influencer login</button>
+
+    </div>
+    <h1>Admin login </h1>
+    <form action="/validate-admin/" method="post"> 
+        <div id="pannel" style="text-align: center; border: 1px,solid; padding: 1%;">
+            <label for="username">Admin ID:</label><input type="text" name="username" id="username" required>
+        <div>
+            <label for="password">Password:</label><input type="password" name="password" id="password" required>
+            <input type="submit" value="Login">
+
+    </div>
+</div>
+    </form>
+    <title>Admin login</title>
+</head>
+<body>
+    <script>
+        function showAlert(message) {
+            message="Redirecting to Admin Login Page"
+            alert(message);
+        }
+        showAlert("{{ message }}");
+
+    </script>
+</body>
+</html>

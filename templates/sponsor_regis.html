@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <button type="button" onclick="document.location='admin'">Admin login</button>
+    <button type="button" onclick="document.location='influencer_regis'">Influencer login</button>
+    <h1>Sponsor login</h1>
+    <form action="/add-sponsor/" method="post">
+        <div id="sponsor_pannel" style="text-align: center; border: 1px solid; padding: 1%;">
+            <label for="company_name">Company Name:</label><input type="text" name="company_name" id="company_name" required>
+            <div>
+                <label for="budget">Budget:</label><input type="number" name="budget" id="budget" required>
+            </div>
+            <div>
+                <label for="industry">Industry:</label><input type="text" name="industry" id="industry" required>
+            </div>
+            <div>
+                <label for="username">User Name:</label><input type="text" name="username" id="username" required>
+            </div>
+            <div>
+                <label for="password">Password:</label><input type="password" name="password" id="password" required>
+            </div>
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+    <title>Sponsor login</title>
+</head>
+<body>
+</body>
+</html>
