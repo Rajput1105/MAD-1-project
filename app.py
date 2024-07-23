@@ -1,13 +1,21 @@
 from flask import Flask, request, render_template ,redirect, url_for
 import sqlite3
 
+import logging
 
-
+ 
 app = Flask(__name__)
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+
+
+
 
 def get_db_connection():
     conn = sqlite3.connect('mydatabase.db')
     conn.row_factory = sqlite3.Row
+    # conn.execute("PRAGMA foreign_keys = ON;")
+
     return conn
 
 @app.route('/')
@@ -129,8 +137,13 @@ def validate_sponsor():
     cur.execute("SELECT * FROM sponsor WHERE username = ?", (username,))
     sponsor = cur.fetchone()
     conn.close()
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM campaigns')
+    campaigns = cur.fetchall()
+    conn.close()
     if sponsor and sponsor['password']==password_Sponsor:
-        return render_template('sponsor_das.html',sponsor=sponsor)
+        return render_template('sponsor_das.html',sponsor=sponsor ,campaigns=campaigns )
     else:
         return "login failed!"
 
@@ -153,26 +166,57 @@ def validate_influencer():
 
 
 
-@app.route('/create_campaigns', methods=['GET', 'POST'])
+@app.route('/create_campaigns/', methods=['GET', 'POST'])
 def create_campaigns():
-    if request.method=='POST':    
-        id=request.form['id']
-        name = request.form['name']
-        description = request.form['description']
+        return render_template("create_campaigns.html")
+
+# @app.route('/ADD/',methods=['POST'])
+# def ADD():
+#      if request.method=='POST':
+#         try:
+               
+#             sponsor_id = request.form['id']
+#             name = request.form['name']
+#             description = request.form['description']
+#             budget = request.form['budget']
+#             start_date = request.form['start-date']
+#             end_date = request.form['end-date']
+
+
+@app.route('/ADD', methods=['POST'])
+def add_campaign():
+    try :
+        name = request.form['campaign_name']
+        sponsor_id = request.form['sponsor_id']
+        start_date = request.form['start-date']
+        end_date = request.form['end-date']
         budget = request.form['budget']
-        date = request.form['date']
-        conn = get_db_connection()
+        # image = request.files['image'] 
+        description = request.form['description']
+
+        conn = sqlite3.connect('mydatabase.db')
+        conn.row_factory = sqlite3.Row
         cur = conn.cursor()
-        cur.execute('INSERT INTO campaigns (sponsor_id, name, description, budget,date) VALUES (?, ?, ?, ?, ?)',
-                        (id, name, description, budget, date))
+       
+        
+        cur = conn.cursor()
+        cur.execute('INSERT INTO campaigns (sponsor_id, name, description, budget, start_date, end_date, status,image) VALUES (?, ?, ?, ?, ?, ?, ?,?)',
+                            (sponsor_id, name, description, budget, start_date, end_date, 'Active','null'))
         conn.commit()
         conn.close()
+        logging.info("Campaign added successfully")
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM campaigns')
+        campaigns = cur.fetchall()
+        conn.close()
+        
+        return render_template('create_campaigns.html',campaigns=campaigns)
+    except Exception as e:
+        logging.error(f"Error: {e}")
+        return render_template('sponsor_das.html')
 
-        return render_template("sponsor_das.html")
-
-
-
-
+        
 
 
 
