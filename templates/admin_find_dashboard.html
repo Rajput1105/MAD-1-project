@@ -4,10 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <button style="cursor:pointer; color: red;" type="button" onclick="document.location='flag.html'">Flag/Progress</button>
-
-    <button style="cursor:pointer; color: red;" type="button" onclick="document.location='login.html'">Logout</button>
-
+    
+   <form action="/info" method="GET">
+    <button style="cursor:pointer; border: 0.05cm solid; color:rgb(30, 216, 30);" type="submit">Info</button>
+</form>
+    <button style="cursor:pointer; color: rgb(75, 12, 223);" type="button" onclick="document.location='#'">Find</button>
+    <form action="/Stats" method="GET">
+        <button style="cursor:pointer; border: 0.05cm solid; color:rgb(50, 241, 107);" type="submit">Stats</button>
+    </form><form action="/login" method="GET">
+        <button style="cursor:pointer; border: 0.05cm solid; color:rgb(29, 201, 57);" type="submit">Logout</button>
+    </form>
     <style>
         table {
             width: 100%;

@@ -61,7 +61,7 @@ def validate_admin():
     conn.close()
     conn.close()
     if admin and admin['password']==ad_password:
-        return render_template('ad_dashboard.html', sponsor=sponsor, influencer=influencer)
+        return render_template('admin_find_dashboard.html', sponsor=sponsor, influencer=influencer)
     else:
         return render_template('admin.html', message='"Admin login failed! Please Use Correct Credentials"')
     
@@ -217,8 +217,30 @@ def add_campaign():
         return render_template('sponsor_das.html')
 
         
+@app.route('/info/', methods=['GET','POST'])
+def info():
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM campaigns')
+    campaigns = cur.fetchall()
+    conn.close()
+    return render_template("admin_info.html" ,campaigns=campaigns)
 
 
+
+@app.route('/flag/<int:campaign_id>', methods=['GET','POST'])
+def flag(campaign_id):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('UPDATE campaigns SET flagged = 1 WHERE id = campaign_id')
+    conn.commit()
+    conn.close
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM campaigns')
+    campaigns = cur.fetchall()
+    conn.close()
+    return render_template("admin_info.html",campaigns=campaigns)
 
 if __name__ == '__main__':
     app.run(debug=True)
