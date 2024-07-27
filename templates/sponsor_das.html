@@ -1,61 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><title>Influencer Dashboard</title>
+    <meta charset="UTF-8"><title>Sponsor Dashboard</title>
     <h1>Welcome, Buddy!</h1>
-   
+    <style>
+        .custom-button {
+            cursor: pointer;            color:black;            padding: 10px 20px;            margin: 5.01px;            border-radius: 4px;
+            font-size: 16px;            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .custom-button:hover {
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+    <div class="shadow p-3 mb-5 bg-white rounded" style="display:inline-flex; position: fixed ; float: right;">
+
    <form action="/create_campaigns" method="GET">
-    <button style="cursor:pointer; border: 0.05cm solid; color:rgb(67, 103, 234);" type="submit">Campaigns</button>
+    <button class="custom-button campaign-button" type="submit">Campaigns</button>
 </form>
 
-    <!-- <button style="cursor:pointer;border: 0.05cm solid; color:rgb(67, 103, 234);" type="button" onclick="document.location='create_campaigns'">Campaigns</button> -->
-    <button    style="cursor:pointer;border: 0.05cm solid; color:rgb(77, 231, 16);" type="button" onclick="document.location='stats.html'">Stats</button>
-    <button style="cursor:pointer; border: 0.05cm solid; color:rgb(195, 15, 15);" type="button" onclick="document.location='login.html'">Logout</button>
+    <button    class="custom-button " style="background-color: rgb(77, 231, 16);" type="button" onclick="document.location='stats.html'">Stats</button>
+    <button class="custom-button " style="background-color: rgb(195, 15, 15);" type="button" onclick="document.location='login.html'">Logout</button>
+</div>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
-<body>
+<!-- <body>
     <h1>Profile </h1>
     <ul>
         <h4>Company  Name : {{sponsor.company_name}}</h4>
         <h4>Sponsor ID : {{sponsor.id}}</h4>
         <h4>Username :{{ sponsor.username}}</h4>
         <h4> Industary : {{sponsor.industry}}</h4>
-       <!-- Button trigger modal -->
-        
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
-  </button>
-<!--   
-   Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div> 
-
+      
  
     <h2>Campaigns </h2>
    
-        <!-- printing active campaigns -->
-         
-        {% for campaign in campaigns %}
+        
         <h3>Active campaigns</h3>
-        <li>Campaigns Name :{{ campaign.name }} ID: {{ campaign.id }} - {{ campaign.status }} Progress : 30%</li>
+        {% for campaign in campaigns %}
+        {% if campaign.sponsor_id == sponsor.id %}
+        <div class="campaign" data-start-date="{{ campaign.start_date }}" data-end-date="{{ campaign.end_date }}">
+          <ul>
+              <li>Campaign Name: {{ campaign.name }}</li>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#campaignModal{{ campaign.id }}">
+                  View 
+              </button>
+  
+            
+              <div class="modal fade" id="campaignModal{{ campaign.id }}" tabindex="-1" aria-labelledby="campaignModalLabel{{ campaign.id }}" aria-hidden="true">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="campaignModalLabel{{ campaign.id }}">Campaign Details</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                              <h3>Campaign Name: {{ campaign.name }}</h3>
+                              <h3>Campaign Description: {{ campaign.description }}</h3>
+                              <h3>Campaign Start Date: {{ campaign.start_date }}</h3>
+                              <h3>Campaign End Date: {{ campaign.end_date }}</h3>
+                              <h3>Campaign Status: {{ campaign.status }}</h3>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              
+                              <div> 
+
+
+
+
+                                <li>Campaign Name: {{ campaign.name }}</li>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#campaignModal{{ campaign.id }}">
+    View 
+</button>
+
+
+<div class="modal fade" id="campaignModal{{ campaign.id }}" tabindex="-1" aria-labelledby="campaignModalLabel{{ campaign.id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="campaignModalLabel{{ campaign.id }}">Campaign Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/campaign_edit/{{ campaign.id }}" method="POST">
+                    <div class="mb-3">
+                        <label for="campaignName{{ campaign.id }}" class="form-label">Campaign Name</label>
+                        <input type="text" class="form-control" id="campaignName{{ campaign.id }}" name="name" value="{{ campaign.name }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="campaignDescription{{ campaign.id }}" class="form-label">Campaign Description</label>
+                        <textarea class="form-control" id="campaignDescription{{ campaign.id }}" name="description">{{ campaign.description }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="campaignStartDate{{ campaign.id }}" class="form-label">Campaign Start Date</label>
+                        <input type="date" class="form-control" id="campaignStartDate{{ campaign.id }}" name="start_date" value="{{ campaign.start_date }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="campaignEndDate{{ campaign.id }}" class="form-label">Campaign End Date</label>
+                        <input type="date" class="form-control" id="campaignEndDate{{ campaign.id }}" name="end_date" value="{{ campaign.end_date }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="campaignStatus{{ campaign.id }}" class="form-label">Campaign Status</label>
+                        <select class="form-control" id="campaignStatus{{ campaign.id }}" name="status">
+                            <option value="active" {% if campaign.status == 'active' %}selected{% endif %}>Active</option>
+                            <option value="inactive" {% if campaign.status == 'inactive' %}selected{% endif %}>Inactive</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="campaignVisibility{{ campaign.id }}" class="form-label">Campaign Visibility</label>
+                        <select class="form-control" id="campaignVisibility{{ campaign.id }}" name="visibility">
+                            <option value="private" {% if campaign.visibility == 'private' %}selected{% endif %}>Private</option>
+                            <option value="public" {% if campaign.visibility == 'public' %}selected{% endif %}>Public</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+                              </div>
+
+
+
+
+                                  
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </ul>
+      </div>
+
+        {% endif %}
         {% endfor %}
 
     </ul> 
+</body> -->
+
+<body>
+  <h1>Welcome, Buddy!</h1>
+
+  
+  <h1>Profile</h1>
+  <ul>
+      <h4>Company Name: {{ sponsor.company_name }}</h4>
+      <h4>Sponsor ID: {{ sponsor.id }}</h4>
+      <h4>Username: {{ sponsor.username }}</h4>
+      <h4>Industry: {{ sponsor.industry }}</h4>
+  </ul>
+
+  <h2>Campaigns</h2>
+  <h3>Active campaigns</h3>
+  {% for campaign in campaigns %}
+  {% if campaign.sponsor_id == sponsor.id and campaign.visibility=='public' %}
+  <h3>Public campaigns</h3>
+  <div class="campaign" data-start-date="{{ campaign.start_date }}" data-end-date="{{ campaign.end_date }}">
+      <ul>
+          <li>Campaign Name: {{ campaign.name }}</li>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#campaignModal{{ campaign.id }}">
+              View 
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="campaignModal{{ campaign.id }}" tabindex="-1" aria-labelledby="campaignModalLabel{{ campaign.id }}" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="campaignModalLabel{{ campaign.id }}">Campaign Details</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                          <form action="/campaign_edit/{{ campaign.id }}/{{ sponsor.id }}/" method="POST">
+                              <div class="mb-3">
+                                  <label for="campaignName{{ campaign.id }}" class="form-label">Campaign Name</label>
+                                  <input type="text" class="form-control" id="campaignName{{ campaign.id }}" name="name" value="{{ campaign.name }}">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="campaignDescription{{ campaign.id }}" class="form-label">Campaign Description</label>
+                                  <textarea class="form-control" id="campaignDescription{{ campaign.id }}" name="description">{{ campaign.description }}</textarea>
+                              </div>
+                              <div class="mb-3">
+                                  <label for="campaignStartDate{{ campaign.id }}" class="form-label">Campaign Start Date</label>
+                                  <input type="date" class="form-control" id="campaignStartDate{{ campaign.id }}" name="start_date" value="{{ campaign.start_date }}">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="campaignEndDate{{ campaign.id }}" class="form-label">Campaign End Date</label>
+                                  <input type="date" class="form-control" id="campaignEndDate{{ campaign.id }}" name="end_date" value="{{ campaign.end_date }}">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="campaignStatus{{ campaign.id }}" class="form-label">Campaign Status</label>
+                                  <select class="form-control" id="campaignStatus{{ campaign.id }}" name="status">
+                                      <option value="active" {% if campaign.status =='Active' %}selected{% endif %}>Active</option>
+                                      <option value="inactive" {% if campaign.status == 'inactive' %}selected{% endif %}>Inactive</option>
+                                  </select>
+                              </div>
+                              <div class="mb-3">
+                                  <label for="campaignVisibility{{ campaign.id }}" class="form-label">Campaign Visibility</label>
+                                  <select class="form-control" id="campaignVisibility{{ campaign.id }}" name="visibility">
+                                      <option value="private" {% if campaign.visibility == 'private' %}selected{% endif %}>Private</option>
+                                      <option value="public" {% if campaign.visibility == 'public' %}selected{% endif %}>Public</option>
+                                  </select>
+                              </div>
+                              <div class="modal-footer">
+                                <form action="/viewads/{{campaign.id}}" method="post">
+                                <button type="submit" class="btn btn-info">View Ads</button>
+                            </form>
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-primary">Save Changes</button>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </ul>
+  </div>
+
+  {% else %}
+
+<h3>Private Campaigns</h3>
+
+  <div class="campaign" data-start-date="{{ campaign.start_date }}" data-end-date="{{ campaign.end_date }}">
+    <ul>
+        <li>Campaign Name: {{ campaign.name }}</li>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#campaignModal{{ campaign.id }}">
+            View 
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="campaignModal{{ campaign.id }}" tabindex="-1" aria-labelledby="campaignModalLabel{{ campaign.id }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="campaignModalLabel{{ campaign.id }}">Campaign Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/campaign_edit/{{ campaign.id }}/{{ sponsor.id }}/" method="POST">
+                            <div class="mb-3">
+                                <label for="campaignName{{ campaign.id }}" class="form-label">Campaign Name</label>
+                                <input type="text" class="form-control" id="campaignName{{ campaign.id }}" name="name" value="{{ campaign.name }}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="campaignDescription{{ campaign.id }}" class="form-label">Campaign Description</label>
+                                <textarea class="form-control" id="campaignDescription{{ campaign.id }}" name="description">{{ campaign.description }}</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="campaignStartDate{{ campaign.id }}" class="form-label">Campaign Start Date</label>
+                                <input type="date" class="form-control" id="campaignStartDate{{ campaign.id }}" name="start_date" value="{{ campaign.start_date }}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="campaignEndDate{{ campaign.id }}" class="form-label">Campaign End Date</label>
+                                <input type="date" class="form-control" id="campaignEndDate{{ campaign.id }}" name="end_date" value="{{ campaign.end_date }}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="campaignStatus{{ campaign.id }}" class="form-label">Campaign Status</label>
+                                <select class="form-control" id="campaignStatus{{ campaign.id }}" name="status">
+                                    <option value="active" {% if campaign.status =='Active' %}selected{% endif %}>Active</option>
+                                    <option value="inactive" {% if campaign.status == 'inactive' %}selected{% endif %}>Inactive</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="campaignVisibility{{ campaign.id }}" class="form-label">Campaign Visibility</label>
+                                <select class="form-control" id="campaignVisibility{{ campaign.id }}" name="visibility">
+                                    <option value="private" {% if campaign.visibility == 'private' %}selected{% endif %}>Private</option>
+                                    <option value="public" {% if campaign.visibility == 'public' %}selected{% endif %}>Public</option>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <form action="/viewads/{{campaign.id}}" method="post">
+                                    <button type="submit" class="btn btn-info">View Ads</button>
+                                </form>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+                                <form action="/viewads/{{campaign.id}}" method="post">
+                                    <button type="submit" class="btn btn-info">View Ads</button>
+                                </form>
+                                
+    </ul>
+</div>
+  {% endif %}
+  {% endfor %}
 </body>
 </html>

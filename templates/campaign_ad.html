@@ -9,19 +9,22 @@
 </head>
 <body>
     <h3>Campaign Detail</h3>
-    {% for campaign in campaigns %}
+    {% for ad in ads %}
         
-        <li>Campaigns ID: {{ campaign.id }} </li> 
-        <li> Campaigns Budget: {{ campaign.budget }}</li> 
+        <li>Ad ID: {{ ad.id }} </li> 
+        <li>Ad Name: {{ ad.ad_name }} </li> 
+
+        <li> Ads Budget: {{ ad.budget }}</li> 
+        <li>Campaigns Id :{{campaign_id}}</li>
         {% endfor %}
     <h1>Create new add</h1>
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#example">
       Create New Ad request 
     </button>
     
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="example" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -29,7 +32,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/campaigns_ad" method="post" enctype="multipart/form-data">
+                    <form action="/ads/{{campaign_id}}/" method="post" enctype="multipart/form-data">
                         <div>
                             <label for="ad_name" id="ad_name">NAME : 
                                 <input class="form-control" type="text" name="ad_name" id="ad_name" required>

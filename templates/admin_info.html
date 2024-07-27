@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,12 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     
     <button style="cursor:pointer; color: blue;" type="button" onclick="document.location='#'">Info</button>
-    
-
     <button style="cursor:pointer; color: red;" type="button" onclick="document.location='admin_find_dashboard.html'">Find</button>
-
     <button style="cursor:pointer; color: red;" type="button" onclick="document.location='stats.html'">Stats</button>
-
     <button style="cursor:pointer; color: red;" type="button" onclick="document.location='login.html'">Logout</button>
 
     <style>
@@ -31,106 +28,117 @@
         }
     </style>
     <script>
+        function calculateProgress(startDate, endDate) {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const now = new Date();
 
+            if (now < start) {
+                return "Campaign has not started yet.";
+            } else if (now > end) {
+                return "Campaign has ended.";
+            }
 
+            const totalDuration = end - start;
+            const elapsedTime = now - start;
+            const progress = (elapsedTime / totalDuration) * 100;
 
+            return `${progress.toFixed(2)}%`;
+        }
 
-
-
-
-        function calculate_Progress(start_Date, end_Date) {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    const now = new Date();
-
-    // Check if the current date is before the start date or after the end date
-    if (now < start) {
-        return "Campaign has not started yet.";
-    } else if (now > end) {
-        return "Campaign has ended.";
-    }
-
-    // Calculate the total duration of the campaign in milliseconds
-    const totalDuration = end - start;
-
-    // Calculate the elapsed time since the start date in milliseconds
-    const elapsedTime = now - start;
-
-    // Calculate the progress as a percentage
-    const progress = (elapsedTime / totalDuration) * 100;
-
-    // Return the progress rounded to 2 decimal places
-    return `${progress.toFixed(2)}%`;
-} 
-; function showProgress() {
-            const campaigns = document.querySelectorAll('.Campaign');
-            campaigns.forEach(Campaign => {
-                const startDate = Campaign.dataset.start_date;
-                const endDate = Campaign.dataset.end_date;
+        function showProgress() {
+            const campaigns = document.querySelectorAll('.campaign');
+            campaigns.forEach(campaign => {
+                const startDate = campaign.dataset.startDate;
+                const endDate = campaign.dataset.endDate;
                 const progress = calculateProgress(startDate, endDate);
-                campaign.querySelector('.progress').innerText = `Progress: ${progress}%`;
+                campaign.querySelector('.progress').innerText = `Progress: ${progress}`;
             });
         }
 
         document.addEventListener('DOMContentLoaded', showProgress);
-
     </script>
 </head>
 <body>
     <h1>Admin Dashboard</h1>
-    <H3>Hello Admin !!!</H3>
+    <h3>Hello Admin !!!</h3>
 
     <h2>Ongoing Campaigns</h2>
-    
-        {% for Campaign in campaigns %}
-         {%if Campaign.flagged == 0 %}
-          <div>
-    
-           <ul>
-             Campaign Name :{{ Campaign.name }} <!-- Button trigger modal -->
-             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              View Details
-             </button>
-             
-             <!-- Modal -->
-             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-               <div class="modal-dialog">
-                 <div class="modal-content">
-                   <div class="modal-header">
-                     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                   </div>
-                   <div class="modal-body">
-                     <H3>Campaign Name : {{Campaign.name}}</H3>
-                     <H3>Campaign Description :  {{Campaign.description}}</H3>
-                     <H3>Campaign Start Date : {{Campaign.start_date}}</H3>
-                     <H3>ampaign Etart Date : {{Campaign.end_date}}</H3>
-                     <h3>ampaign Status : {{Campaign.status}}</h3>
-                   </div>
-                   <div class="modal-footer">
-                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                     for
-                     <button type="submit" class="btn btn-primary"  >Flagged</button>
-                   </div>
-                 </div>
-               </div>
+    {% for campaign in campaigns %}
+    {% if campaign.flagged == 0 %}
+    <div class="campaign" data-start-date="{{ campaign.start_date }}" data-end-date="{{ campaign.end_date }}">
+        <ul>
+            <li>Campaign Name: {{ campaign.name }}</li>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#campaignModal{{ campaign.id }}">
+                View Details
+            </button>
 
-             </div> 
-             <form action="/flag/{{ Campaign.id }}" method="GET"></form><div id="campaign-flag" data-flagged="0">
-              <button style="color: red;" type="submit" >Flag</button>
+            <!-- Modal -->
+            <div class="modal fade" id="campaignModal{{ campaign.id }}" tabindex="-1" aria-labelledby="campaignModalLabel{{ campaign.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="campaignModalLabel{{ campaign.id }}">Campaign Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h3>Campaign Name: {{ campaign.name }}</h3>
+                            <h3>Campaign Description: {{ campaign.description }}</h3>
+                            <h3>Campaign Start Date: {{ campaign.start_date }}</h3>
+                            <h3>Campaign End Date: {{ campaign.end_date }}</h3>
+                            <h3>Campaign Status: {{ campaign.status }}</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <form action="/flag/{{ campaign.id }}" method="POST">
+                                <button type="submit" class="btn btn-danger">Flag</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>      </ul>  
-   
+        </ul>
+    </div>
+    {% endif %}
+    {% endfor %}
 
-   {%else %}
+    <h2>Flagged Campaigns</h2>
+    {% for campaign in campaigns %}
+    {% if campaign.flagged == 1 %}
+    <div class="campaign" data-start-date="{{ campaign.start_date }}" data-end-date="{{ campaign.end_date }}">
+        <ul>
+            <li>Campaign Name: {{ campaign.name }}</li>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#campaignModalFlagged{{ campaign.id }}">
+                View Details
+            </button>
 
-   <h2>Flagged Campaigns</h2>
-
-
-   {%endif%}
-        {%endfor%}
-    </table>
-    
-    
+            <!-- Modal -->
+            <div class="modal fade" id="campaignModalFlagged{{ campaign.id }}" tabindex="-1" aria-labelledby="campaignModalLabelFlagged{{ campaign.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="campaignModalLabelFlagged{{ campaign.id }}">Campaign Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h3>Campaign Name: {{ campaign.name }}</h3>
+                            <h3>Campaign Description: {{ campaign.description }}</h3>
+                            <h3>Campaign Start Date: {{ campaign.start_date }}</h3>
+                            <h3>Campaign End Date: {{ campaign.end_date }}</h3>
+                            <h3>Campaign Status: {{ campaign.status }}</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <form action="/unflag/{{ campaign.id }}" method="POST">
+                              <button type="submit" class="btn btn-warning">Un - Flag</button>
+                          </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ul>
+    </div>
+    {% endif %}
+    {% endfor %}
 </body>
 </html>

@@ -8,22 +8,7 @@
     <title>Create Campaign</title>
 </head>
 
-<body>
-  <h2>Campaigns </h2>
-   
-        <!-- printing active campaigns -->
-         
-        {% for campaign in campaigns %}
-        <h3>Active campaigns</h3>
-        <li>Campaigns Name :{{ campaign.name }} ID: {{ campaign.id }} - {{ campaign.status }} </li>
-        {% endfor %}
-    <h1>Create a New Campaign</h1>
-    <!-- Button trigger modal -->
-    <button style="position: absolute; bottom: 0; text-align: center;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        ADD 
-    </button>
-    
-    <!-- Modal -->
+<body>Create New Campaign
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -52,6 +37,13 @@
                             <input type="date" name="end-date" id="end-date" required>
                         </div>
                         <div class="input-group mb-3">
+                            <label for="campaignVisibility" class="form-label">Campaign Visibility</label>
+                            <select class="form-control" id="campaignVisibility" name="visibility">
+                                <option value="private" >Private</option>
+                                <option value="public" >Public</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
                             <span class="input-group-text">Budget :$</span>
                             <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="budget" required>
                         </div>
@@ -72,6 +64,11 @@
             </div>
         </div>
     </div>
+    <!-- Button trigger modal -->
+    <button style="position: absolute; bottom: 0; text-align: center;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        ADD 
+    </button>
+    
 </body>
 </html>
 
