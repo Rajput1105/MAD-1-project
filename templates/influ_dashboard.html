@@ -27,6 +27,39 @@
         <h4>Name: {{influencer.influencer_name}}</h4>
         <h4>Target Audience: {{influencer.target_audience}}</h4>
         <h4>Earning: {{influencer.Earning}}</h4>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profileModal">
+            Edit Profile
+        </button>
+        <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="profileModalLabel">Edit Profile</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/update_profile/{{influencer.username}}/" method="POST">
+                            <div class="mb-3">
+                                <label for="influencerName" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="influencerName" name="influencer_name" value="{{influencer.influencer_name}}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="targetAudience" class="form-label">Target Audience</label>
+                                <input type="text" class="form-control" id="targetAudience" name="target_audience" value="{{influencer.target_audience}}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="earning" class="form-label">Earning</label>
+                                <input type="text" class="form-control" id="earning" name="earning" value="{{influencer.Earning}}">
+                            </div>
+                            <button type="submit" class="btn btn-success">Save changes</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </ul>
 
     <h2>Active Campaigns</h2>

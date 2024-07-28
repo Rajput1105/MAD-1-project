@@ -165,6 +165,12 @@ def validate_influencer():
         return "login failed!"
 
 
+@app.route('/update_profile/<string:username>/', methods=['POST'])
+def update_profile(username):
+    influencer_name = request.form['influencer_name']
+    target_audience = request.form['target_audience']
+    Earning = request.form['earning']
+
 
 @app.route('/accept/<int:campaign_id>/<int:influencer_id>/', methods=['POST'])
 def accept(campaign_id,influencer_id):
