@@ -15,21 +15,59 @@
 </head>
 <body>
     <h1>Welcome, Buddy!</h1>
-    <div class="shadow p-3 mb-5 bg-white rounded" style="display:inline-flex; position: fixed ; float: right;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="display:inline-flex; position: fixed ; float: right;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Influencer Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+<form action="/find_camads/{{influencer.id}}" method="post">
+    <button class="custom-button " style="cursor:pointer;border: 0.05cm solid; color:rgb(67, 103, 234);" type="submit">Find </button>
 
-    <button class="custom-button " style="cursor:pointer;border: 0.05cm solid; color:rgb(67, 103, 234);" type="button" onclick="document.location='sponsor_find.html'">Find ?</button>
-    <button class="custom-button " style="cursor:pointer;border: 0.05cm solid; color:rgb(77, 231, 16);" type="button" onclick="document.location='stats.html'">Stats</button>
-    <button class="custom-button " style="cursor:pointer; border: 0.05cm solid; color:rgb(195, 15, 15);" type="button" onclick="document.location='login.html'">Logout</button>
+</form>
+<form action="/inf_stats/" method="post">
+
+    <button class="custom-button " style="cursor:pointer;border: 0.05cm solid; color:rgb(77, 231, 16);" type="submit" >Stats</button>
+</form>
+<form action="/" method="post">
+
+    <button class="custom-button " style="cursor:pointer; border: 0.05cm solid; color:rgb(195, 15, 15);" type="submit">Logout</button>
+</form>
     </div>
+            </ul>
+          </div>
+        </div>
+    </nav> 
+    <br>
+    <br>
+
+    <br>
+
+    <br>
+
     <h1>Profile</h1>
     <ul>
-        <img src="profile.jpg" alt="image">
-        <h4>Name: {{influencer.influencer_name}}</h4>
+        <div class="container center">
+
+            <div class="justify-content-left" style="width: 18rem;">
+                <img src="/static/profile.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">
+                    <h4>Name: {{influencer.influencer_name}}</h4>
         <h4>Target Audience: {{influencer.target_audience}}</h4>
-        <h4>Earning: {{influencer.Earning}}</h4>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profileModal">
-            Edit Profile
-        </button>
+        <h4>Earning: {{active_earnings}}</h4>
+                  </p>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profileModal">
+                    Edit Profile
+                </button>                </div>
+              </div>
+        <!-- <img src="/static/profile.jpg" alt="image"> -->
+        
+        
+        </div>
         <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -49,7 +87,26 @@
                             </div>
                             <div class="mb-3">
                                 <label for="earning" class="form-label">Earning</label>
-                                <input type="text" class="form-control" id="earning" name="earning" value="{{influencer.Earning}}">
+                                <input type="text" class="form-control" id="earning" name="earning" value="{{active_earnings}}" placeholder="{{active_earnings}}" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="platforms" class="form-label">Platforms</label>
+                                <div>
+                                    <input type="checkbox" id="platformInstagram" name="instagram" value="1" {% if influencer.instagram == 1 %}checked{% endif %}>
+                                    <label for="platformInstagram">Instagram</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="platformYoutube" name="youtube" value="1" {% if influencer.youtube == 1 %}checked{% endif %}>
+                                    <label for="platformYoutube">YouTube</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="platformTwitter" name="twitter" value="1" {% if influencer.twitter == 1 %}checked{% endif %}>
+                                    <label for="platformTwitter">Twitter</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Change Password</label>
+                                <input type="text" class="form-control" id="password" name="password" value="{{influencer.password}}">
                             </div>
                             <button type="submit" class="btn btn-success">Save changes</button>
                         </form>
@@ -65,7 +122,7 @@
     <h2>Active Campaigns</h2>
     <!-- printing active campaigns -->
     {% for campaign in campaigns %}
-    {% if campaign.influencer_decision == 'accept' %}
+    {% if campaign.influencer_decision == 'accept'  and campaign.sponsor_decision == influencer.username and campaign.flagged==0 and campaign.visibility=='public' %}
     <span>
         <li>Campaign Name: {{ campaign.name }} Campaign Status: {{ campaign.status }}</li>
     </span>
@@ -89,6 +146,8 @@
                             <h3>Campaign Description: {{ campaign.description }}</h3>
                             <h3>Campaign Start Date: {{ campaign.start_date }}</h3>
                             <h3>Campaign End Date: {{ campaign.end_date }}</h3>
+                            <h3>Campaign Budget: {{ campaign.budget }}</h3>
+
                             <h3>Campaign Status: {{ campaign.status }}</h3>
                         </div>
                         <div class="modal-footer">
@@ -105,7 +164,7 @@
     <h2>New Campaigns</h2>
     <!-- printing active campaigns -->
     {% for campaign in campaigns %}
-    {% if campaign.influencer_decision == 'pending' %}
+    {% if (( campaign.influencer_decision == 'pending' and campaign.sponsor_decision == 'null') or (campaign.influencer_decision == 'reject' and campaign.sponsor_decision == influencer.username  ) ) and campaign.flagged==0 and campaign.visibility=='public' %}
     <span>
         <li>Campaign Name: {{ campaign.name }} Campaign Status: {{ campaign.status }}</li>
     </span>
@@ -133,12 +192,54 @@
                         </div>
                         <div class="modal-footer">
                             <form action="/accept/{{ campaign.id }}/{{influencer.id}}/" method="POST">
-                                <button type="submit" class="btn btn-success">Success</button>
+                                <button type="submit" class="btn btn-success">Accept</button>
                             </form>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <form action="/reject/{{ campaign.id }}/{{influencer.id}}/" method="POST">
-                                <button type="submit" class="btn btn-danger">Flag</button>
+                                <button type="submit" class="btn btn-danger">reject</button>
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ul>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+    <h2>Requested Campaigns</h2>
+    <!-- printing active campaigns -->
+    {% for campaign in campaigns %}
+    {% if campaign.influencer_decision == 'accept' and campaign.sponsor_decision == 'null' and  campaign.flagged==0 and campaign.visibility == 'public' %}
+    <span>
+        <li>Campaign Name: {{ campaign.name }} Campaign Status: {{ campaign.status }}</li>
+    </span>
+    <div class="campaign" data-start-date="{{ campaign.start_date }}" data-end-date="{{ campaign.end_date }}">
+        <ul>
+            <li>Campaign Name: {{ campaign.name }}</li>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#campaignModal{{ campaign.id }}">
+                View Details
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="campaignModal{{ campaign.id }}" tabindex="-1" aria-labelledby="campaignModalLabel{{ campaign.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="campaignModalLabel{{ campaign.id }}">Campaign Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h3>Campaign Name: {{ campaign.name }}</h3>
+                            <h3>Campaign Description: {{ campaign.description }}</h3>
+                            <h3>Campaign Start Date: {{ campaign.start_date }}</h3>
+                            <h3>Campaign End Date: {{ campaign.end_date }}</h3>
+                            <h3>Campaign Status: {{ campaign.status }}</h3>
+                        </div>
+                        <div class="modal-footer">
+                            
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            
                         </div>
                     </div>
                 </div>

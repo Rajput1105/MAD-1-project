@@ -3,73 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        
-        .container {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 50px;
-        }
-        .login-form {
-            border: 1px solid darkslateblue;
-            padding: 20px;
-            border-radius: 5px;
-            width: 300px;
-        }
-        .login-form h2 {
-            text-align: center;
-            color: blue;}
-        
-        .login-form input[type="text"],
-        .login-form input[type="password"] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .login-form input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            
-            cursor: pointer;
-        }
-        
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Login Forms</title>
 </head>
-<body>
-    <div> 
-        
-
-        <button type="button" onclick="document.location='sponsor_regis' " > Sponser registration</button>
-        <button type="button" onclick="document.location='influencer_regis'">Influencer registration</button>
-        <button type="button" onclick="document.location='admin'">Admin login</button>       
+<body class="bg-light" style="background-image: url('/static/admin1.jpg');  background-size: cover; background-repeat: no-repeat;
+">
+    <div class="d-flex justify-content-center my-4">
+        <button class="btn btn-primary mx-2" type="button" onclick="document.location='sponsor_regis'">Sponsor Registration</button>
+        <button class="btn btn-primary mx-2" type="button" onclick="document.location='influencer_regis'">Influencer Registration</button>
+        <button class="btn btn-primary mx-2" type="button" onclick="document.location='admin'">Admin Login</button>       
     </div>
-    <div class="container">
-        <!-- Sponsor Login Form -->
-        <div class="login-form">
-            <h2>Sponsor Login</h2>
-            <form action="/validate-sponsor/" method="post">
-                <label for="sponsor_username">Username:</label>
-                <input type="text" id="sponsor_username" name="username" required>
-                <label for="sponsor_password">Password:</label>
-                <input type="password" id="sponsor_password" name="password" required>
-                <input type="submit" value="Login">
-            </form>
+    <div class="container d-flex justify-content-around mt-5">
+        <div class="card border-primary" style="width: 300px;">
+            <div class="card-body">
+                <h2 class="card-title text-center text-primary">Sponsor Login</h2>
+                <form action="/validate-sponsor/" method="post">
+                    <div class="mb-3">
+                        <label for="sponsor_username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="sponsor_username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sponsor_password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="sponsor_password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Login</button>
+                </form>
+            </div>
         </div>
 
-        <!-- Influencer Login Form -->
-        <div class="login-form">
-            <h2>Influencer Login</h2>
-            <form action="/validate-influencer/" method="post">
-                <label for="influencer_username">Username:</label>
-                <input type="text" id="influencer_username" name="username" required>
-                <label for="influencer_password">Password:</label>
-                <input type="password" id="influencer_password" name="password" required>
-                <input type="submit" value="Login">
-            </form>
+        <div class="card border-primary" style="width: 300px;">
+            <div class="card-body">
+                <h2 class="card-title text-center text-primary">Influencer Login</h2>
+                <form action="/validate-influencer/" method="post">
+                    <div class="mb-3">
+                        <label for="influencer_username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="influencer_username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="influencer_password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="influencer_password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Login</button>
+                </form>
+            </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

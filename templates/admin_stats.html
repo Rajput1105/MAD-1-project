@@ -1,0 +1,173 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin stats</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Admin Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  
+                    
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <form action="/admin_profile" method="GET">
+
+<button style="cursor:pointer; color: rgb(24, 237, 95);" type="submit">Find</button>
+            </form>
+<form action="/admin_stats" method="GET">
+    <button class="nav-link active" aria-current="page" style="cursor:pointer;background-color:rgb(30, 11, 234); color: azure;" >Stats</button>
+</form>
+<form action="/" method="post">
+
+    <button class="custom-button " style="cursor:pointer; border: 0.05cm solid; color:rgb(195, 15, 15);" type="submit">Logout</button>
+</form>
+
+</ul>  </div>
+          </div>
+        </div></nav>
+
+
+
+
+
+
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Sponsor Budget</h2>
+        <div class="chart-container">
+            <div class="row">
+                <div class="col-md-12">
+                    <canvas id="budget_chart" width="800" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <h2 class="text-center">Campaign Budget</h2>
+        <div class="chart-container">
+            <div class="row">
+                <div class="col-md-12">
+                    <canvas id="campaign_budget_chart" width="800" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <h2 class="text-center">Influencer Earnings Progress</h2>
+        <div class="chart-container">
+            <div class="row">
+                <div class="col-md-6">
+                    <canvas id="earnings_chart" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const budgetctx = document.getElementById('budget_chart').getContext('2d');
+            const budgetdata = {
+                labels: {{ labels | safe }},
+                datasets: [{
+                    label: 'Budget',
+                    data: {{ budgets | safe }},
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    fill: false,
+                    tension: 0.1
+                }]
+            };
+
+            const budgetchart = new Chart(budgetctx, {
+                type: 'bar',
+                data: budgetdata,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+      
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const earningsctx = document.getElementById('earnings_chart').getContext('2d');
+            const earningsdata = {
+                labels: {{ labels_1 | safe }},
+                datasets: [{
+                    label: 'Earnings',
+                    data: {{ earnings | safe }},
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            const earningschart = new Chart(earningsctx, {
+                type: 'bar',
+                data: earningsdata,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const campaignbudgetctx = document.getElementById('campaign_budget_chart').getContext('2d');
+            const campaignbudgetdata = {
+                labels: {{ labels_2 | safe }},
+                datasets: [{
+                    label: 'Budget',
+                    data: {{ budget | safe }},
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    fill: false,
+                    tension: 0.1
+                }]
+            };
+
+            const campaignbudgetchart = new Chart(campaignbudgetctx, {
+                type: 'line',
+                data: campaignbudgetdata,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

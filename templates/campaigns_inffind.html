@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <title>Influencer Search</title>
+  </head>
+  <body>
+
+
+<div class="shadow p-3 mb-5 bg-white rounded" style="display:inline-flex; position: fixed ; float: right;">
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Sponsor Navbar </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            
+            
+            <li class="nav-item">
+              
+
+                  <button    class="custom-button " style="background-color: rgb(11, 240, 240);" onclick="document.location='#'" type="button" >Find</button>
+                  </li> 
+                  
+                  <li class="nav-item">
+                      <form action="/sponsor_stats" method="GET">
+                          <button class="custom-button campaign-button"-current="page" style="background-color: rgb(77, 231, 16);" type="submit">Stats</button>
+                      </form></li>
+                  
+                  
+                  
+                  
+                  
+                  <li class="nav-item">
+              <form action="/" method="post">
+
+                  <button class="custom-button campaign-button" aria-current="page" style="cursor:pointer; border: 0.05cm solid; color:rgb(195, 15, 15);" type="submit">Logout</button>
+              </form>
+            </li>
+            <li class="nav-item">
+
+  </div>
+            </li>
+          </ul>
+          
+        </div>
+      </div>
+    </nav>
+<br>
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+
+    <div class="container mt-5">
+      <h1 class="mb-4">Search Influencers/Campaigns </h1>
+      <form method="POST" action="/find_campaigns_influencer/">
+        <div class="form-row">
+          <div class="col-md-8 mb-3">
+            <input type="text" class="form-control" name="search" placeholder="Search...">
+          </div>
+          <div class="col-md-4 mb-3">
+            <select class="form-control" name="cam_inf">
+              <option value="">Filter by...</option>
+              <option value="campaigns">Campaigns</option>  
+              <option value="influencers">Influencers</option>
+            </select>
+          </div>
+          <div class="col-md-4 mb-3">
+            <select class="form-control" name="filter">
+              <option value="">Filter by...</option>
+              <option value="name">Name</option>  
+              <option value="niche">Niche</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+      <div class="mt-5">
+        <h2>Results:</h2>
+        <ul class="list-group">
+          {% for result in results %}
+          {%if inf==1 and result.flagged==0 %}
+            <li class="list-group-item">Influencer username : {{ result.influencer_name }} Influencer Niche : {{ result.niche }}  Influencer Work space :{{result.target_audience}}
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Request            </button>
+              
+            </li>
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="/requested/{{ result.username }}" method="POST">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">Campaigns</span>
+                      <select class="form-select" name="name" required>
+                    
+                            {% for x in campaigns %}
+                                <option value="{{ x.name }}">{{ x.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Click to Request</button>
+                  </div>
+                </div></form>
+              </div>
+            </div>
+                                              
+                                    
+          {%endif%}
+          {% if cam ==1  and result.flagged==0 %}
+          <li class="list-group-item">Campaigns name :{{ result.name }}   Campaign Description: {{ result.description }}</li>
+
+          {%endif%}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+      
+  </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

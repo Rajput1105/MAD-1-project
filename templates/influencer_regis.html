@@ -5,45 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <div class="shadow p-3 mb-5 bg-white rounded" style="display:inline-flex; top: auto;">
-
-        <style> 
-            body {
-                /* display: flex; */
-                justify-content: center;
-                align-items: center;
-                min-height: 100vh;
-                background-color: #31dd92; }</style>
-    <button type="button" onclick="document.location='admin'">Admin login</button>
-    <button type="button" onclick="document.location='sponsor_regis'">Sponsor login</button>
-    </div>
-    <h1 class="text-center mb-4 ">Influencer Registeration</h1>
-    <form action="/add-influencer/" method="post">
-        <div id="influencer_pannel" style="text-align: center; border: 1px solid; padding: 1%;">
-            <label class="font-weight-bold" for="influencer_name">Influencer Name:</label><input type="text" name="influencer_name" id="influencer_name" required>
-            <div>
-                <label class="font-weight-bold" for="target_audience">Target Audience:</label><input type="number" name="target_audience" id="target_audience" required>
-            </div>
-            <div>
-                <label class="font-weight-bold" for="youtube">YouTube:</label><input type="checkbox" name="youtube" id="youtube">
-            </div>
-            <div>
-                <label class="font-weight-bold" for="instagram">Instagram:</label><input type="checkbox" name="instagram" id="instagram">
-            </div>
-            <div>
-                <label class="font-weight-bold" for="twitter">Twitter:</label><input type="checkbox" name="twitter" id="twitter">
-            </div>
-            <div>
-                <label class="font-weight-bold" for="username">User Name:</label><input type="text" name="username" id="username" required>
-            </div>
-            <div>
-                <label class="font-weight-bold" for="password">Password:</label><input type="password" name="password" id="password" required>
-            </div>
-            <input class="font-weight-bold" type="submit" value="Submit">
-        </div>
-    </form>
-    <title>Influencer login</title>
+    <style> 
+       
+        .btn-group {
+            display: flex;           justify-content: space-between;            margin-bottom: 1.08rem;
+            font: bold;
+        }
+        .button {
+            margin: 0.1rem 0.5rem 0.3rem 0.02rem;
+        }
+    </style>
+    <title>Influencer Registration</title>
 </head>
-<body>
+<body style="min-height: 100vh;
+background-image: url('/static/inf1.jpg');
+display: flex;
+justify-content: center;
+align-items: center;
+font: bold;
+color: black;
+background-repeat: no-repeat;
+background-size: cover;
+
+
+">
+    <div class="form">
+        <div class="btn-group">
+            <button class="btn button btn-primary" onclick="document.location='admin'">Admin Login</button>
+            <button class="btn button btn-primary" onclick="document.location='sponsor_regis'">Sponsor Registration</button>
+            <button class="btn button btn-primary" onclick="document.location='login'">Login Page</button>
+        </div>
+        <h1 class="text-center" style="color: aliceblue;">Influencer Registration</h1>
+        <form action="/add-influencer/" method="post" style=" background: rgb(102, 223, 244);        padding: 2rem; max-width: 580px;   font: bold;   border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);   width: 100%;">
+            <div class="mb-3">
+                <label class="form-label" for="influencer_name">Influencer Name</label>
+                <input type="text" class="form-control" name="influencer_name" id="influencer_name" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="target_audience">Target Audience</label>
+                <input type="number" class="form-control" name="target_audience" id="target_audience" required>
+            </div>
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" name="youtube" id="youtube">
+                <label class="form-check-label" for="youtube">YouTube</label>
+            </div>
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" name="instagram" id="instagram">
+                <label class="form-check-label" for="instagram">Instagram</label>
+            </div>
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" name="twitter" id="twitter">
+                <label class="form-check-label" for="twitter">Twitter</label>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="username">User name :</label>
+                <input type="text" class="form-control" name="username" id="username" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="password">Password :</label>
+                <input type="password" class="form-control" name="password" id="password" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="niche">Niche</label>
+                <input type="text" class="form-control" name="niche" id="niche" required>
+            </div>
+            <button type="submit" class="btn button btn-primary w-100">Submit</button>
+        </form>
+    </div>
 </body>
 </html>
